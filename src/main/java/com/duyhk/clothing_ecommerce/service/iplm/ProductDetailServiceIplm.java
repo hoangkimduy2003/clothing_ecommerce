@@ -1,0 +1,78 @@
+package com.duyhk.clothing_ecommerce.service.iplm;
+
+import com.duyhk.clothing_ecommerce.dto.FavouriteDTO;
+import com.duyhk.clothing_ecommerce.dto.PageDTO;
+import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
+import com.duyhk.clothing_ecommerce.dto.ProductDetailDTO;
+import com.duyhk.clothing_ecommerce.entity.Favourite;
+import com.duyhk.clothing_ecommerce.entity.ProductDetail;
+import com.duyhk.clothing_ecommerce.reponsitory.ProductDetailReponsitory;
+import com.duyhk.clothing_ecommerce.service.ProductDetailService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ProductDetailServiceIplm implements ProductDetailService {
+    @Autowired
+    private ProductDetailReponsitory productDetailRepo;
+
+    @Override
+    public ProductDetail convertToEntity(ProductDetailDTO productDetailDTO) {
+        return new ModelMapper().map(productDetailDTO,ProductDetail.class);
+    }
+
+    @Override
+    public ProductDetailDTO convertToDto(ProductDetail productDetail) {
+        return new ModelMapper().map(productDetail,ProductDetailDTO.class);
+    }
+
+    @Override
+    public PageDTO<List<ProductDetailDTO>> getAll(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
+        pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
+        Page<ProductDetail> pageEntity = productDetailRepo.findAll(
+                PageRequest.of(
+                        pageRequestDTO.getPage(),
+                        pageRequestDTO.getSize()));
+        List<ProductDetailDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
+        return  PageDTO.<List<ProductDetailDTO>>builder()
+                .data(listDto)
+                .totalElements(pageEntity.getTotalElements())
+                .totalPages(pageEntity.getTotalPages())
+                .build();
+    }
+
+    @Override
+    public ProductDetailDTO getById(Long id) {
+        return convertToDto(productDetailRepo.findById(id).orElseThrow(IllegalArgumentException::new));
+    }
+
+    @Override
+    public void create(ProductDetailDTO productDetailDTO) {
+        productDetailRepo.save(convertToEntity(productDetailDTO));
+    }
+
+    @Override
+    public void update(ProductDetailDTO productDetailDTO) {
+        ProductDetail productDetail = productDetailRepo.findById(productDetailDTO.getId()).orElseThrow(IllegalArgumentException::new);
+        if (productDetail != null) {
+            productDetail = convertToEntity(productDetailDTO);
+            productDetailRepo.save(productDetail);
+        }
+
+    }
+
+    @Override
+    public void delete(Long id) {
+        ProductDetail productDetail = productDetailRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+        if (productDetail != null) {
+            productDetailRepo.deleteById(id);
+        }
+    }
+}
