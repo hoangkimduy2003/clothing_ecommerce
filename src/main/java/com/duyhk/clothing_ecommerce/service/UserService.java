@@ -11,8 +11,8 @@ public interface UserService {
     Users convertToEntity(UserDTO userDTO);
 
     UserDTO convertToDto(Users user);
-
-    PageDTO<List<UserDTO>> getAll(PageRequestDTO pageRequestDTO);
+    List<UserDTO> getAll();
+    PageDTO<List<UserDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     UserDTO getById(Long id);
 

@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ProductDTO;
-import com.duyhk.clothing_ecommerce.dto.ProductDetailDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.entity.Product;
 import com.duyhk.clothing_ecommerce.entity.ProductDetail;
 import com.duyhk.clothing_ecommerce.reponsitory.ProductReponsitory;
@@ -31,9 +28,12 @@ public class ProductServiceIplm implements ProductService {
     public ProductDTO convertToDto(Product product) {
         return new ModelMapper().map(product,ProductDTO.class);
     }
-
     @Override
-    public PageDTO<List<ProductDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<ProductDTO> getAll() {
+        return productRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<ProductDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Product> pageEntity = productRepo.findAll(

@@ -1,6 +1,7 @@
 package com.duyhk.clothing_ecommerce.service;
 
 import com.duyhk.clothing_ecommerce.dto.CategoryDTO;
+import com.duyhk.clothing_ecommerce.dto.ColorDTO;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
 import com.duyhk.clothing_ecommerce.entity.Category;
@@ -11,8 +12,8 @@ public interface CategoryService {
     Category convertToEntity(CategoryDTO categoryDTO);
 
     CategoryDTO convertToDto(Category category);
-
-    PageDTO<List<CategoryDTO>> getAll(PageRequestDTO pageRequestDTO);
+    List<CategoryDTO> getAll();
+    PageDTO<List<CategoryDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     CategoryDTO getById(Long id);
 

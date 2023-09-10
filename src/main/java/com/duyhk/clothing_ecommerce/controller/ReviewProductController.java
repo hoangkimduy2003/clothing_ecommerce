@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.controller;
 
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ResponseDTO;
-import com.duyhk.clothing_ecommerce.dto.ReviewProductDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.service.ReviewProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +13,17 @@ import java.util.List;
 public class ReviewProductController {
     @Autowired
     private ReviewProductService reviewProductService;
-
     @GetMapping("")
-    public ResponseDTO<PageDTO<List<ReviewProductDTO>>> getAll(@RequestBody PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<List<ReviewProductDTO>> getAll(){
+        return ResponseDTO.<List<ReviewProductDTO>>builder()
+                .data(reviewProductService.getAll())
+                .status(200)
+                .build();
+    }
+    @PostMapping("/page")
+    public ResponseDTO<PageDTO<List<ReviewProductDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<ReviewProductDTO>>>builder()
-                .data(reviewProductService.getAll(pageRequestDTO))
+                .data(reviewProductService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
                 .status(200)
                 .build();
     }

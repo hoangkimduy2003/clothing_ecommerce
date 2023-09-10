@@ -3,6 +3,7 @@ package com.duyhk.clothing_ecommerce.service.iplm;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
 import com.duyhk.clothing_ecommerce.dto.ReviewProductDTO;
+import com.duyhk.clothing_ecommerce.dto.SizeDTO;
 import com.duyhk.clothing_ecommerce.entity.ReviewProduct;
 import com.duyhk.clothing_ecommerce.reponsitory.ReviewProductReponsitory;
 import com.duyhk.clothing_ecommerce.service.ReviewProductService;
@@ -29,9 +30,12 @@ public class ReviewProductServiceIplm implements ReviewProductService {
     public ReviewProductDTO convertToDto(ReviewProduct reviewProduct) {
         return new ModelMapper().map(reviewProduct,ReviewProductDTO.class);
     }
-
     @Override
-    public PageDTO<List<ReviewProductDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<ReviewProductDTO> getAll() {
+        return reviewProductRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<ReviewProductDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<ReviewProduct> pageEntity = reviewProductRepo.findAll(

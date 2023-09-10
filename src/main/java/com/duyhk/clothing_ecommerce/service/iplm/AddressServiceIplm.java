@@ -1,6 +1,7 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
 import com.duyhk.clothing_ecommerce.dto.AddressDTO;
+import com.duyhk.clothing_ecommerce.dto.BillDetailDTO;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
 import com.duyhk.clothing_ecommerce.entity.Address;
@@ -30,9 +31,12 @@ public class AddressServiceIplm implements AddressService {
     public AddressDTO convertToDto(Address address) {
         return new ModelMapper().map(address, AddressDTO.class);
     }
-
     @Override
-    public PageDTO<List<AddressDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<AddressDTO> getAll() {
+        return addressReponsitory.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<AddressDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Address> pageEntity = addressReponsitory.findAll(
@@ -49,7 +53,8 @@ public class AddressServiceIplm implements AddressService {
 
     @Override
     public AddressDTO getById(Long id) {
-        return convertToDto(addressReponsitory.findById(id).orElseThrow(IllegalArgumentException::new));
+        return convertToDto(addressReponsitory.findById(id)
+                .orElseThrow(IllegalArgumentException::new));
     }
 
     @Override

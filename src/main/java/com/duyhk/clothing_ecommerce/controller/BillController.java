@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.controller;
 
-import com.duyhk.clothing_ecommerce.dto.BillDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ResponseDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +13,17 @@ import java.util.List;
 public class BillController {
     @Autowired
     private BillService billService;
-
     @GetMapping("")
-    public ResponseDTO<PageDTO<List<BillDTO>>> getAll(@RequestBody PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<List<BillDTO>> getAll(){
+        return ResponseDTO.<List<BillDTO>>builder()
+                .data(billService.getAll())
+                .status(200)
+                .build();
+    }
+    @PostMapping("/page")
+    public ResponseDTO<PageDTO<List<BillDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<BillDTO>>>builder()
-                .data(billService.getAll(pageRequestDTO))
+                .data(billService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
                 .status(200)
                 .build();
     }

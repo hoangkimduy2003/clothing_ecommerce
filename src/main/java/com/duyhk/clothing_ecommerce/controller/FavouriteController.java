@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.controller;
 
-import com.duyhk.clothing_ecommerce.dto.FavouriteDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ResponseDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.service.FavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +13,17 @@ import java.util.List;
 public class FavouriteController {
     @Autowired
     private FavouriteService favouriteService;
-
     @GetMapping("")
-    public ResponseDTO<PageDTO<List<FavouriteDTO>>> getAll(@RequestBody PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<List<FavouriteDTO>> getAll(){
+        return ResponseDTO.<List<FavouriteDTO>>builder()
+                .data(favouriteService.getAll())
+                .status(200)
+                .build();
+    }
+    @PostMapping("/page")
+    public ResponseDTO<PageDTO<List<FavouriteDTO>>> getByPageRequest(@RequestBody PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<FavouriteDTO>>>builder()
-                .data(favouriteService.getAll(pageRequestDTO))
+                .data(favouriteService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
                 .status(200)
                 .build();
     }

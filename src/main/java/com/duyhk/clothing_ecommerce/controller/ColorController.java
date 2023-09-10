@@ -1,10 +1,8 @@
 package com.duyhk.clothing_ecommerce.controller;
 
-import com.duyhk.clothing_ecommerce.dto.ColorDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ResponseDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.service.ColorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +15,17 @@ public class ColorController {
 
     @Autowired
     private ColorService colorService;
-
     @GetMapping("")
-    public ResponseDTO<PageDTO<List<ColorDTO>>> getAll() {
-        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+    public ResponseDTO<List<ColorDTO>> getAll(){
+        return ResponseDTO.<List<ColorDTO>>builder()
+                .data(colorService.getAll())
+                .status(200)
+                .build();
+    }
+    @PostMapping("/page")
+    public ResponseDTO<PageDTO<List<ColorDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<ColorDTO>>>builder()
-                .data(colorService.getAll(pageRequestDTO))
+                .data(colorService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
                 .status(200)
                 .build();
     }
@@ -36,7 +39,7 @@ public class ColorController {
     }
 
     @PostMapping("")
-    public ResponseDTO<Void> create(@RequestBody ColorDTO colorDTO) {
+    public ResponseDTO<Void> create(@RequestBody @Valid ColorDTO colorDTO) {
         colorService.create(colorDTO);
         return ResponseDTO.<Void>builder()
                 .status(200)

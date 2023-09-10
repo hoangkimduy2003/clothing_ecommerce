@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
-import com.duyhk.clothing_ecommerce.dto.CartDTO;
-import com.duyhk.clothing_ecommerce.dto.CartDetailDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.entity.Cart;
 import com.duyhk.clothing_ecommerce.entity.CartDetail;
 import com.duyhk.clothing_ecommerce.reponsitory.CartReponsitory;
@@ -31,9 +28,12 @@ public class CartServiceIplm implements CartService {
     public CartDTO convertToDto(Cart cart) {
         return new ModelMapper().map(cart,CartDTO.class);
     }
-
     @Override
-    public PageDTO<List<CartDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<CartDTO> getAll() {
+        return cartRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<CartDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Cart> pageEntity = cartRepo.findAll(

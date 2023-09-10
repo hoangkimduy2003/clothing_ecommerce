@@ -1,5 +1,6 @@
 package com.duyhk.clothing_ecommerce.service;
 
+import com.duyhk.clothing_ecommerce.dto.FavouriteDTO;
 import com.duyhk.clothing_ecommerce.dto.FavouriteDetailDTO;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
@@ -11,8 +12,8 @@ public interface FavouriteDetailService {
     FavouriteDetail convertToEntity(FavouriteDetailDTO favouriteDetailDTO);
 
     FavouriteDetailDTO convertToDto(FavouriteDetail favouriteDetail);
-
-    PageDTO<List<FavouriteDetailDTO>> getAll(PageRequestDTO pageRequestDTO);
+    List<FavouriteDetailDTO> getAll();
+    PageDTO<List<FavouriteDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     FavouriteDetailDTO getById(Long id);
 

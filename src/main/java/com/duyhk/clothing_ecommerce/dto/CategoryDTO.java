@@ -1,5 +1,6 @@
 package com.duyhk.clothing_ecommerce.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,6 @@ import java.util.List;
 public class CategoryDTO extends TimeAuditableDTO{
     private Long id;
     private String name;
+    @JsonIgnore
     private List<ProductDTO> products;
 }

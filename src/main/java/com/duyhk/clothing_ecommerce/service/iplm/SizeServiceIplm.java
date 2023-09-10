@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ReviewProductDTO;
-import com.duyhk.clothing_ecommerce.dto.SizeDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.entity.ReviewProduct;
 import com.duyhk.clothing_ecommerce.entity.Size;
 import com.duyhk.clothing_ecommerce.reponsitory.SizeReponsitory;
@@ -31,9 +28,12 @@ public class SizeServiceIplm implements SizeService {
     public SizeDTO convertToDto(Size size) {
         return new ModelMapper().map(size,SizeDTO.class);
     }
-
     @Override
-    public PageDTO<List<SizeDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<SizeDTO> getAll() {
+        return sizeRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<SizeDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Size> pageEntity = sizeRepo.findAll(

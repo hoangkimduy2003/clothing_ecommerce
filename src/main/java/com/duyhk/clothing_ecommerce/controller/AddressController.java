@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.controller;
 
-import com.duyhk.clothing_ecommerce.dto.AddressDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
-import com.duyhk.clothing_ecommerce.dto.ResponseDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +16,17 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("")
-    public ResponseDTO<PageDTO<List<AddressDTO>>> getAll(@RequestBody PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<List<AddressDTO>> getAll() {
+        return ResponseDTO.<List<AddressDTO>>builder()
+                .data(addressService.getAll())
+                .status(200)
+                .build();
+    }
+
+    @PostMapping("/page")
+    public ResponseDTO<PageDTO<List<AddressDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<AddressDTO>>>builder()
-                .data(addressService.getAll(pageRequestDTO))
+                .data(addressService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
                 .status(200)
                 .build();
     }
@@ -36,7 +41,7 @@ public class AddressController {
     }
 
     @PostMapping("")
-    public ResponseDTO<Void> create(@RequestBody AddressDTO addressDTO){
+    public ResponseDTO<Void> create(@RequestBody AddressDTO addressDTO) {
         addressService.create(addressDTO);
         return ResponseDTO.<Void>builder()
                 .msg("Thêm địa chỉ thành công")
@@ -46,7 +51,7 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseDTO<Void> updateById(@RequestBody AddressDTO addressDTO,
-                                        @PathVariable Long id){
+                                        @PathVariable Long id) {
         addressDTO.setId(id);
         addressService.update(addressDTO);
         return ResponseDTO.<Void>builder()
@@ -56,7 +61,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseDTO<Void> deleteById(@PathVariable Long id){
+    public ResponseDTO<Void> deleteById(@PathVariable Long id) {
         addressService.delete(id);
         return ResponseDTO.<Void>builder()
                 .msg("Thêm địa chỉ thành công")
