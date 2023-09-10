@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
-import com.duyhk.clothing_ecommerce.dto.BillDTO;
-import com.duyhk.clothing_ecommerce.dto.ColorDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.entity.Bill;
 import com.duyhk.clothing_ecommerce.entity.Color;
 import com.duyhk.clothing_ecommerce.reponsitory.BillReponsitory;
@@ -31,9 +28,12 @@ public class BillServiceIplm implements BillService {
     public BillDTO convertToDto(Bill bill) {
         return new ModelMapper().map(bill,BillDTO.class);
     }
-
     @Override
-    public PageDTO<List<BillDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<BillDTO> getAll() {
+        return billReponsitory.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<BillDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Bill> pageEntity = billReponsitory.findAll(

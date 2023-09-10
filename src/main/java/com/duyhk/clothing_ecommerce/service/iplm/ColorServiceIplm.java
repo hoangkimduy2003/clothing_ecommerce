@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
-import com.duyhk.clothing_ecommerce.dto.AddressDTO;
-import com.duyhk.clothing_ecommerce.dto.ColorDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.entity.Address;
 import com.duyhk.clothing_ecommerce.entity.Color;
 import com.duyhk.clothing_ecommerce.reponsitory.ColorReponsitory;
@@ -32,9 +29,12 @@ public class ColorServiceIplm implements ColorService {
     public ColorDTO convertToDto(Color color) {
         return new ModelMapper().map(color,ColorDTO.class);
     }
-
     @Override
-    public PageDTO<List<ColorDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<ColorDTO> getAll() {
+        return colorRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<ColorDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Color> pageEntity = colorRepo.findAll(

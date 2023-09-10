@@ -31,7 +31,12 @@ public class UserServiceIplm implements UserService {
     }
 
     @Override
-    public PageDTO<List<UserDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<UserDTO> getAll() {
+        return userRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PageDTO<List<UserDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Users> pageEntity = userRepo.findAll(

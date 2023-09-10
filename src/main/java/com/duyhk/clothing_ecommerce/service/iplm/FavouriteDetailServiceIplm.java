@@ -1,9 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
-import com.duyhk.clothing_ecommerce.dto.CategoryDTO;
-import com.duyhk.clothing_ecommerce.dto.FavouriteDetailDTO;
-import com.duyhk.clothing_ecommerce.dto.PageDTO;
-import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
+import com.duyhk.clothing_ecommerce.dto.*;
 import com.duyhk.clothing_ecommerce.entity.Category;
 import com.duyhk.clothing_ecommerce.entity.FavouriteDetail;
 import com.duyhk.clothing_ecommerce.reponsitory.FavouriteDetailReponsitory;
@@ -31,9 +28,12 @@ public class FavouriteDetailServiceIplm implements FavouriteDetailService {
     public FavouriteDetailDTO convertToDto(FavouriteDetail favouriteDetail) {
         return new ModelMapper().map(favouriteDetail,FavouriteDetailDTO.class);
     }
-
     @Override
-    public PageDTO<List<FavouriteDetailDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<FavouriteDetailDTO> getAll() {
+        return favouriteDetailRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<FavouriteDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<FavouriteDetail> pageEntity = favouriteDetailRepo.findAll(

@@ -3,6 +3,7 @@ package com.duyhk.clothing_ecommerce.service.iplm;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
 import com.duyhk.clothing_ecommerce.dto.PromotionDTO;
+import com.duyhk.clothing_ecommerce.dto.ReviewProductDTO;
 import com.duyhk.clothing_ecommerce.entity.Promotion;
 import com.duyhk.clothing_ecommerce.reponsitory.PromotionReponsitory;
 import com.duyhk.clothing_ecommerce.service.PromotionService;
@@ -29,9 +30,12 @@ public class PromotionServiceIplm implements PromotionService {
     public PromotionDTO convertToDto(Promotion promotion) {
         return new ModelMapper().map(promotion,PromotionDTO.class);
     }
-
     @Override
-    public PageDTO<List<PromotionDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<PromotionDTO> getAll() {
+        return promotionRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<PromotionDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<Promotion> pageEntity = promotionRepo.findAll(

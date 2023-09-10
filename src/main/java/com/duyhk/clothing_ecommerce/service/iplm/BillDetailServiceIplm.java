@@ -1,5 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
+import com.duyhk.clothing_ecommerce.dto.BillDTO;
 import com.duyhk.clothing_ecommerce.dto.BillDetailDTO;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
@@ -29,9 +30,12 @@ public class BillDetailServiceIplm implements BillDetailService {
     public BillDetailDTO convertToDto(BillDetail billDetail) {
         return new ModelMapper().map(billDetail, BillDetailDTO.class);
     }
-
     @Override
-    public PageDTO<List<BillDetailDTO>> getAll(PageRequestDTO pageRequestDTO) {
+    public List<BillDetailDTO> getAll() {
+        return billDetailReponsitory.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+    }
+    @Override
+    public PageDTO<List<BillDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
         pageRequestDTO.setSize(pageRequestDTO.getSize() == null ? 5 : pageRequestDTO.getSize());
         Page<BillDetail> pageEntity = billDetailReponsitory.findAll(

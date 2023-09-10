@@ -1,5 +1,6 @@
 package com.duyhk.clothing_ecommerce.service;
 
+import com.duyhk.clothing_ecommerce.dto.CartDTO;
 import com.duyhk.clothing_ecommerce.dto.CartDetailDTO;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
@@ -11,8 +12,8 @@ public interface CartDetailService {
     CartDetail convertToEntity(CartDetailDTO cartDetailDTO);
 
     CartDetailDTO convertToDto(CartDetail cartDetail);
-
-    PageDTO<List<CartDetailDTO>> getAll(PageRequestDTO pageRequestDTO);
+    List<CartDetailDTO> getAll();
+    PageDTO<List<CartDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     CartDetailDTO getById(Long id);
 
