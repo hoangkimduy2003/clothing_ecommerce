@@ -1,7 +1,6 @@
 package com.duyhk.clothing_ecommerce.service.iplm;
 
 import com.duyhk.clothing_ecommerce.dto.*;
-import com.duyhk.clothing_ecommerce.entity.Category;
 import com.duyhk.clothing_ecommerce.entity.FavouriteDetail;
 import com.duyhk.clothing_ecommerce.reponsitory.FavouriteDetailReponsitory;
 import com.duyhk.clothing_ecommerce.service.FavouriteDetailService;

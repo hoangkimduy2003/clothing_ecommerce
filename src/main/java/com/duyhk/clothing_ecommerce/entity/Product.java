@@ -31,7 +31,7 @@ public class Product extends TimeAuditable{
 
     @ManyToOne
     @JsonIgnoreProperties("products")
-    private Category category;
+    private CategoryDetail categoryDetail;
 
     @OneToMany(mappedBy = "product")
     private List<PromotionDetail> promotionDetails;

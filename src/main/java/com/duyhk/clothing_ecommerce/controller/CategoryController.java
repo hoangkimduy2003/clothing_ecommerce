@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
+@CrossOrigin
 @RequestMapping("/category")
 public class CategoryController {
-
     @Autowired
     private CategoryService categoryService;
     @GetMapping("")
@@ -47,11 +46,12 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseDTO<Void> update(@RequestBody CategoryDTO categoryDTO,
+    public ResponseDTO<CategoryDTO> update(@RequestBody CategoryDTO categoryDTO,
                                     @PathVariable Long id) {
         categoryDTO.setId(id);
         categoryService.update(categoryDTO);
-        return ResponseDTO.<Void>builder()
+        return ResponseDTO.<CategoryDTO>builder()
+                .data(categoryDTO)
                 .status(200)
                 .msg("Sửa loại sản phẩm thành công")
                 .build();

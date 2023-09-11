@@ -1,6 +1,5 @@
 package com.duyhk.clothing_ecommerce.dto;
 
-import com.duyhk.clothing_ecommerce.entity.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,7 @@ public class ProductDTO extends TimeAuditableDTO{
     private Long status;
     private List<String> images;
     @JsonIgnoreProperties("products")
-    private CategoryDTO category;
+    private CategoryDetailDTO category;
     private List<PromotionDetailDTO> promotionDetails;
     private List<ProductDetailDTO> productDetails;
     @JsonIgnore
