@@ -21,17 +21,19 @@ public class CartServiceIplm implements CartService {
 
     @Override
     public Cart convertToEntity(CartDTO cartDTO) {
-        return new ModelMapper().map(cartDTO,Cart.class);
+        return new ModelMapper().map(cartDTO, Cart.class);
     }
 
     @Override
     public CartDTO convertToDto(Cart cart) {
-        return new ModelMapper().map(cart,CartDTO.class);
+        return new ModelMapper().map(cart, CartDTO.class);
     }
+
     @Override
     public List<CartDTO> getAll() {
         return cartRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<CartDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class CartServiceIplm implements CartService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<CartDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<CartDTO>>builder()
+        return PageDTO.<List<CartDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

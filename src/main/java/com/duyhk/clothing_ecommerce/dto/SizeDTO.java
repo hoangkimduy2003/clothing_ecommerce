@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SizeDTO extends TimeAuditableDTO{
+public class SizeDTO extends TimeAuditableDTO {
     private Long id;
     private String name;
     @JsonIgnore

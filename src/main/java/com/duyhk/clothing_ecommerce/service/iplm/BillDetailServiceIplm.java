@@ -30,10 +30,12 @@ public class BillDetailServiceIplm implements BillDetailService {
     public BillDetailDTO convertToDto(BillDetail billDetail) {
         return new ModelMapper().map(billDetail, BillDetailDTO.class);
     }
+
     @Override
     public List<BillDetailDTO> getAll() {
         return billDetailReponsitory.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<BillDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());

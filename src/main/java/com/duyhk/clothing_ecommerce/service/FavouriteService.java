@@ -12,7 +12,9 @@ public interface FavouriteService {
     Favourite convertToEntity(FavouriteDTO favouriteDTO);
 
     FavouriteDTO convertToDto(Favourite favourite);
+
     List<FavouriteDTO> getAll();
+
     PageDTO<List<FavouriteDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     FavouriteDTO getById(Long id);

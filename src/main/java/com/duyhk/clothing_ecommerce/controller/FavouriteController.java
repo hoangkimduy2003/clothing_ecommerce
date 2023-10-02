@@ -13,13 +13,15 @@ import java.util.List;
 public class FavouriteController {
     @Autowired
     private FavouriteService favouriteService;
+
     @GetMapping("")
-    public ResponseDTO<List<FavouriteDTO>> getAll(){
+    public ResponseDTO<List<FavouriteDTO>> getAll() {
         return ResponseDTO.<List<FavouriteDTO>>builder()
                 .data(favouriteService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<FavouriteDTO>>> getByPageRequest(@RequestBody PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<FavouriteDTO>>>builder()

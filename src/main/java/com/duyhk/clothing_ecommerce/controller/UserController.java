@@ -18,12 +18,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("")
-    public ResponseDTO<List<UserDTO>> getAll(){
+    public ResponseDTO<List<UserDTO>> getAll() {
         return ResponseDTO.<List<UserDTO>>builder()
                 .data(userService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<UserDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<UserDTO>>>builder()

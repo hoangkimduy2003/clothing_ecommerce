@@ -9,7 +9,9 @@ public interface BillService {
     Bill convertToEntity(BillDTO billDTO);
 
     BillDTO convertToDto(Bill bill);
+
     List<BillDTO> getAll();
+
     PageDTO<List<BillDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     BillDTO getById(Long id);

@@ -10,13 +10,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceIplm implements UserService {
+public class UserServiceIplm implements UserService, UserDetailsService {
     @Autowired
     private UserReponsitory userRepo;
 
@@ -27,7 +33,7 @@ public class UserServiceIplm implements UserService {
 
     @Override
     public UserDTO convertToDto(Users user) {
-        return new ModelMapper().map(user,UserDTO.class);
+        return new ModelMapper().map(user, UserDTO.class);
     }
 
     @Override
@@ -44,7 +50,7 @@ public class UserServiceIplm implements UserService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<UserDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<UserDTO>>builder()
+        return PageDTO.<List<UserDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())
@@ -57,8 +63,15 @@ public class UserServiceIplm implements UserService {
     }
 
     @Override
+    public Users findByEmail(String email) {
+        return userRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
     public void create(UserDTO userDTO) {
-        userRepo.save(convertToEntity(userDTO));
+        Users users = convertToEntity(userDTO);
+        users.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        userRepo.save(users);
     }
 
     @Override
@@ -77,5 +90,10 @@ public class UserServiceIplm implements UserService {
         if (user != null) {
             userRepo.deleteById(id);
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

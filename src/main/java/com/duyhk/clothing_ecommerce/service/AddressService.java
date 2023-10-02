@@ -9,7 +9,9 @@ public interface AddressService {
     Address convertToEntity(AddressDTO addressDTO);
 
     AddressDTO convertToDto(Address address);
+
     List<AddressDTO> getAll();
+
     PageDTO<List<AddressDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     AddressDTO getById(Long id);

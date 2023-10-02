@@ -1,5 +1,6 @@
 package com.duyhk.clothing_ecommerce.dto;
 
+import com.duyhk.clothing_ecommerce.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +10,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO extends TimeAuditableDTO{
+public class UserDTO extends TimeAuditableDTO {
     private Long id;
-    private String username;
     private String password;
     private String email;
     private String image;
-    private String role;
+    private Role role;
     private Integer status;
     private List<AddressDTO> addresses;
     private List<ReviewProductDTO> reviewProducts;

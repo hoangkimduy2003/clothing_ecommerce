@@ -13,13 +13,15 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
     @GetMapping("")
-    public ResponseDTO<List<CategoryDTO>> getAll(){
+    public ResponseDTO<List<CategoryDTO>> getAll() {
         return ResponseDTO.<List<CategoryDTO>>builder()
                 .data(categoryService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<CategoryDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<CategoryDTO>>>builder()
@@ -47,7 +49,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseDTO<CategoryDTO> update(@RequestBody CategoryDTO categoryDTO,
-                                    @PathVariable Long id) {
+                                           @PathVariable Long id) {
         categoryDTO.setId(id);
         categoryService.update(categoryDTO);
         return ResponseDTO.<CategoryDTO>builder()

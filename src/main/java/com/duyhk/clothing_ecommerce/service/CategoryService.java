@@ -11,7 +11,9 @@ public interface CategoryService {
     Category convertToEntity(CategoryDTO categoryDTO);
 
     CategoryDTO convertToDto(Category category);
+
     List<CategoryDTO> getAll();
+
     PageDTO<List<CategoryDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     CategoryDTO getById(Long id);

@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ColorDTO extends TimeAuditableDTO{
+public class ColorDTO extends TimeAuditableDTO {
     private Long id;
     @NotNull(message = "${message.err.nameColor}")
     @NotBlank(message = "${message.err.nameColor}")

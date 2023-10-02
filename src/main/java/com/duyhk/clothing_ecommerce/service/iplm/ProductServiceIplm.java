@@ -21,17 +21,19 @@ public class ProductServiceIplm implements ProductService {
 
     @Override
     public Product convertToEntity(ProductDTO productDTO) {
-        return new ModelMapper().map(productDTO,Product.class);
+        return new ModelMapper().map(productDTO, Product.class);
     }
 
     @Override
     public ProductDTO convertToDto(Product product) {
-        return new ModelMapper().map(product,ProductDTO.class);
+        return new ModelMapper().map(product, ProductDTO.class);
     }
+
     @Override
     public List<ProductDTO> getAll() {
         return productRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<ProductDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class ProductServiceIplm implements ProductService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<ProductDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<ProductDTO>>builder()
+        return PageDTO.<List<ProductDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

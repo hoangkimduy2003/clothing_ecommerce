@@ -15,17 +15,20 @@ public class ColorController {
 
     @Autowired
     private ColorService colorService;
+
     @GetMapping("")
-    public ResponseDTO<List<ColorDTO>> getAll(){
+    public ResponseDTO<List<ColorDTO>> getAll() {
         return ResponseDTO.<List<ColorDTO>>builder()
                 .data(colorService.getAll())
                 .status(200)
                 .build();
     }
-    @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<ColorDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+
+    @GetMapping("/page")
+    public ResponseDTO<PageDTO<List<ColorDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                 @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<ColorDTO>>>builder()
-                .data(colorService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(colorService.getByPageRequest(new PageRequestDTO(page, size)))
                 .status(200)
                 .build();
     }

@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PromotionDTO extends TimeAuditableDTO{
+public class PromotionDTO extends TimeAuditableDTO {
     private Long id;
     private String name;
     private Double promotionalLevel;

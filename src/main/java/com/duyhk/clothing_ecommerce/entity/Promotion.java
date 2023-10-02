@@ -12,14 +12,13 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Promotion extends TimeAuditable{
+public class Promotion extends TimeAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private Double promotionalLevel;
-    private Double maximumPromotion;
     private Date dateStart;
     private Date dateEnd;
     private Integer status;

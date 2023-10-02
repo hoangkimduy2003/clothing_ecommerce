@@ -31,10 +31,12 @@ public class AddressServiceIplm implements AddressService {
     public AddressDTO convertToDto(Address address) {
         return new ModelMapper().map(address, AddressDTO.class);
     }
+
     @Override
     public List<AddressDTO> getAll() {
         return addressReponsitory.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<AddressDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -44,7 +46,7 @@ public class AddressServiceIplm implements AddressService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<AddressDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<AddressDTO>>builder()
+        return PageDTO.<List<AddressDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

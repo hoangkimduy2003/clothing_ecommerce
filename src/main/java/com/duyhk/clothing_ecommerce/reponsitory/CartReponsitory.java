@@ -4,5 +4,5 @@ import com.duyhk.clothing_ecommerce.entity.BillDetail;
 import com.duyhk.clothing_ecommerce.entity.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CartReponsitory extends JpaRepository<Cart,Long> {
+public interface CartReponsitory extends JpaRepository<Cart, Long> {
 }

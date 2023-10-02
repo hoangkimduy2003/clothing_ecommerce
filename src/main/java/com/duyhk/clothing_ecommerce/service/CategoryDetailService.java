@@ -11,7 +11,9 @@ public interface CategoryDetailService {
     CategoryDetail convertToEntity(CategoryDetailDTO categoryDetail);
 
     CategoryDetailDTO convertToDto(CategoryDetail categoryDetail);
+
     List<CategoryDetailDTO> getAll();
+
     PageDTO<List<CategoryDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     CategoryDetailDTO getById(Long id);

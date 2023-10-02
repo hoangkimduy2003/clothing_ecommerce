@@ -12,7 +12,9 @@ public interface ColorService {
     Color convertToEntity(ColorDTO colorDTO);
 
     ColorDTO convertToDto(Color color);
+
     List<ColorDTO> getAll();
+
     PageDTO<List<ColorDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     ColorDTO getById(Long id);

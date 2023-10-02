@@ -13,13 +13,15 @@ import java.util.List;
 public class CartController {
     @Autowired
     private CartService cartService;
+
     @GetMapping("")
-    public ResponseDTO<List<CartDTO>> getAll(){
+    public ResponseDTO<List<CartDTO>> getAll() {
         return ResponseDTO.<List<CartDTO>>builder()
                 .data(cartService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<CartDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<CartDTO>>>builder()

@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO extends TimeAuditableDTO{
+public class ProductDTO extends TimeAuditableDTO {
     private Long id;
     private String name;
     private Double importPrice;

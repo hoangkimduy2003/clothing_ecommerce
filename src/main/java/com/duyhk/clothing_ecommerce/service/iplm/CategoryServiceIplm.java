@@ -85,8 +85,8 @@ public class CategoryServiceIplm implements CategoryService {
         Category category = categoryRepo.findById(categoryDTO.getId()).orElseThrow(IllegalArgumentException::new);
         if (category != null) {
             List<CategoryDetail> categoryDetails = categoryDetailRepo.findByCategoryId(categoryDTO.getId());
-            for (CategoryDetailDTO categoryDetailDTO : categoryDTO.getCategoryDetails()){
-                if(categoryDetailDTO.getId() != null){
+            for (CategoryDetailDTO categoryDetailDTO : categoryDTO.getCategoryDetails()) {
+                if (categoryDetailDTO.getId() != null) {
 
                 }
             }

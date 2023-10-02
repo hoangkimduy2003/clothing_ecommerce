@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressDTO extends TimeAuditableDTO{
+public class AddressDTO extends TimeAuditableDTO {
     private Long id;
     @NotNull(message = "Tên không được để trống")
     @NotBlank(message = "Tên không được để trống")

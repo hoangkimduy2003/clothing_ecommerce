@@ -13,13 +13,15 @@ import java.util.List;
 public class BillDetailController {
     @Autowired
     private BillDetailService billDetailService;
+
     @GetMapping("")
-    public ResponseDTO<List<BillDetailDTO>> getAll(){
+    public ResponseDTO<List<BillDetailDTO>> getAll() {
         return ResponseDTO.<List<BillDetailDTO>>builder()
                 .data(billDetailService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<BillDetailDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<BillDetailDTO>>>builder()
@@ -35,17 +37,19 @@ public class BillDetailController {
                 .data(billDetailService.getById(id))
                 .build();
     }
+
     @PostMapping("")
-    public ResponseDTO<Void> create(@RequestBody BillDetailDTO billDetailDTO){
+    public ResponseDTO<Void> create(@RequestBody BillDetailDTO billDetailDTO) {
         billDetailService.create(billDetailDTO);
         return ResponseDTO.<Void>builder()
                 .status(200)
                 .msg("Tạo hoá đơn chi tiết thành công")
                 .build();
     }
+
     @PutMapping("/{id}")
     public ResponseDTO<Void> update(@RequestBody BillDetailDTO billDetailDTO,
-                                    @PathVariable Long id){
+                                    @PathVariable Long id) {
         billDetailDTO.setId(id);
         billDetailService.update(billDetailDTO);
         return ResponseDTO.<Void>builder()
@@ -53,8 +57,9 @@ public class BillDetailController {
                 .msg("Sửa hoá đơn chi tiết thành công")
                 .build();
     }
+
     @DeleteMapping("/{id}")
-    public ResponseDTO<Void> deleteById(@PathVariable Long id){
+    public ResponseDTO<Void> deleteById(@PathVariable Long id) {
         billDetailService.delete(id);
         return ResponseDTO.<Void>builder()
                 .status(200)

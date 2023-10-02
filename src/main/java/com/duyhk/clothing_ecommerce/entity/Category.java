@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Category extends TimeAuditable{
+public class Category extends TimeAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -28,10 +28,12 @@ public class CategoryDetailServiceIplm implements CategoryDetailService {
     public CategoryDetailDTO convertToDto(CategoryDetail categoryDetail) {
         return new ModelMapper().map(categoryDetail, CategoryDetailDTO.class);
     }
+
     @Override
     public List<CategoryDetailDTO> getAll() {
         return categoryRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<CategoryDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class CategoryDetailServiceIplm implements CategoryDetailService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<CategoryDetailDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<CategoryDetailDTO>>builder()
+        return PageDTO.<List<CategoryDetailDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

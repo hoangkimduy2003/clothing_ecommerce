@@ -12,7 +12,9 @@ public interface PromotionDetailService {
     PromotionDetail convertToEntity(PromotionDetailDTO promotionDetailDTO);
 
     PromotionDetailDTO convertToDto(PromotionDetail promotionDetail);
+
     List<PromotionDetailDTO> getAll();
+
     PageDTO<List<PromotionDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     PromotionDetailDTO getById(Long id);

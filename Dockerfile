@@ -4,5 +4,5 @@ RUN mvn clean package -Pprod -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /target/clothing_ecommerce-0.0.1-SNAPSHOT.jar clothing_ecommerce.jar
-EXPOSE 8080
+EXPOSE 8081
 ENTRYPOINT ["java","-jar","clothing_ecommerce.jar"]

@@ -20,17 +20,19 @@ public class FavouriteDetailServiceIplm implements FavouriteDetailService {
 
     @Override
     public FavouriteDetail convertToEntity(FavouriteDetailDTO favouriteDetailDTO) {
-        return new ModelMapper().map(favouriteDetailDTO,FavouriteDetail.class);
+        return new ModelMapper().map(favouriteDetailDTO, FavouriteDetail.class);
     }
 
     @Override
     public FavouriteDetailDTO convertToDto(FavouriteDetail favouriteDetail) {
-        return new ModelMapper().map(favouriteDetail,FavouriteDetailDTO.class);
+        return new ModelMapper().map(favouriteDetail, FavouriteDetailDTO.class);
     }
+
     @Override
     public List<FavouriteDetailDTO> getAll() {
         return favouriteDetailRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<FavouriteDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -40,7 +42,7 @@ public class FavouriteDetailServiceIplm implements FavouriteDetailService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<FavouriteDetailDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<FavouriteDetailDTO>>builder()
+        return PageDTO.<List<FavouriteDetailDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

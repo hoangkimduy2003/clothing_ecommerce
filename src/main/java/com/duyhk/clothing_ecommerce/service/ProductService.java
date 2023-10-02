@@ -12,7 +12,9 @@ public interface ProductService {
     Product convertToEntity(ProductDTO productDTO);
 
     ProductDTO convertToDto(Product product);
+
     List<ProductDTO> getAll();
+
     PageDTO<List<ProductDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     ProductDTO getById(Long id);

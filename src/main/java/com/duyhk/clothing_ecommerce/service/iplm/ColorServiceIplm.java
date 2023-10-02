@@ -22,17 +22,19 @@ public class ColorServiceIplm implements ColorService {
 
     @Override
     public Color convertToEntity(ColorDTO colorDTO) {
-        return new ModelMapper().map(colorDTO,Color.class);
+        return new ModelMapper().map(colorDTO, Color.class);
     }
 
     @Override
     public ColorDTO convertToDto(Color color) {
-        return new ModelMapper().map(color,ColorDTO.class);
+        return new ModelMapper().map(color, ColorDTO.class);
     }
+
     @Override
     public List<ColorDTO> getAll() {
         return colorRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<ColorDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -42,7 +44,7 @@ public class ColorServiceIplm implements ColorService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<ColorDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<ColorDTO>>builder()
+        return PageDTO.<List<ColorDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

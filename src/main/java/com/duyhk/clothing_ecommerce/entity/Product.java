@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product extends TimeAuditable{
+public class Product extends TimeAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,10 +33,14 @@ public class Product extends TimeAuditable{
     @JsonIgnoreProperties("products")
     private CategoryDetail categoryDetail;
 
+    @ManyToOne
+    @JsonIgnoreProperties("products")
+    private Brand brand;
+
     @OneToMany(mappedBy = "product")
     private List<PromotionDetail> promotionDetails;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductDetail> productDetails;
 
 }

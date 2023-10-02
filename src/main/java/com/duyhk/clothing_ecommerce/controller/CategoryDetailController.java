@@ -14,13 +14,15 @@ public class CategoryDetailController {
 
     @Autowired
     private CategoryDetailService categoryDetailService;
+
     @GetMapping("")
-    public ResponseDTO<List<CategoryDetailDTO>> getAll(){
+    public ResponseDTO<List<CategoryDetailDTO>> getAll() {
         return ResponseDTO.<List<CategoryDetailDTO>>builder()
                 .data(categoryDetailService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<CategoryDetailDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<CategoryDetailDTO>>>builder()

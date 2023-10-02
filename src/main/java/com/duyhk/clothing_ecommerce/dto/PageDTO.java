@@ -13,4 +13,6 @@ public class PageDTO<T> {
     private Integer totalPages;
     private Long totalElements;
     private T data;
+    private Integer status;
+    private String msg;
 }

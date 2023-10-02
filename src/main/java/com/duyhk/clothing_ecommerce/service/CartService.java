@@ -11,7 +11,9 @@ public interface CartService {
     Cart convertToEntity(CartDTO cartDTO);
 
     CartDTO convertToDto(Cart cart);
+
     List<CartDTO> getAll();
+
     PageDTO<List<CartDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     CartDTO getById(Long id);

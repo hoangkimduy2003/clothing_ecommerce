@@ -21,17 +21,19 @@ public class SizeServiceIplm implements SizeService {
 
     @Override
     public Size convertToEntity(SizeDTO sizeDTO) {
-        return new ModelMapper().map(sizeDTO,Size.class);
+        return new ModelMapper().map(sizeDTO, Size.class);
     }
 
     @Override
     public SizeDTO convertToDto(Size size) {
-        return new ModelMapper().map(size,SizeDTO.class);
+        return new ModelMapper().map(size, SizeDTO.class);
     }
+
     @Override
     public List<SizeDTO> getAll() {
         return sizeRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<SizeDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class SizeServiceIplm implements SizeService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<SizeDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<SizeDTO>>builder()
+        return PageDTO.<List<SizeDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

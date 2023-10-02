@@ -12,7 +12,9 @@ public interface SizeService {
     Size convertToEntity(SizeDTO sizeDTO);
 
     SizeDTO convertToDto(Size size);
+
     List<SizeDTO> getAll();
+
     PageDTO<List<SizeDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     SizeDTO getById(Long id);

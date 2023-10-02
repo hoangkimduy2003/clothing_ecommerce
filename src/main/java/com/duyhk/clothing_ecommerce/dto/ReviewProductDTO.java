@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewProductDTO extends TimeAuditableDTO{
+public class ReviewProductDTO extends TimeAuditableDTO {
     private Long id;
     private Double rating;
     private String description;

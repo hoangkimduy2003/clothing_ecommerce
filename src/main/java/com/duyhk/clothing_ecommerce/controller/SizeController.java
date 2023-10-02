@@ -13,13 +13,15 @@ import java.util.List;
 public class SizeController {
     @Autowired
     private SizeService sizeService;
+
     @GetMapping("")
-    public ResponseDTO<List<SizeDTO>> getAll(){
+    public ResponseDTO<List<SizeDTO>> getAll() {
         return ResponseDTO.<List<SizeDTO>>builder()
                 .data(sizeService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<SizeDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<SizeDTO>>>builder()

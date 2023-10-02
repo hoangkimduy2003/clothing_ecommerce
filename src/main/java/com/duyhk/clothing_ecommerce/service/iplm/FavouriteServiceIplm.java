@@ -21,17 +21,19 @@ public class FavouriteServiceIplm implements FavouriteService {
 
     @Override
     public Favourite convertToEntity(FavouriteDTO favouriteDTO) {
-        return new ModelMapper().map(favouriteDTO,Favourite.class);
+        return new ModelMapper().map(favouriteDTO, Favourite.class);
     }
 
     @Override
     public FavouriteDTO convertToDto(Favourite favourite) {
-        return new ModelMapper().map(favourite,FavouriteDTO.class);
+        return new ModelMapper().map(favourite, FavouriteDTO.class);
     }
+
     @Override
     public List<FavouriteDTO> getAll() {
         return favouriteRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<FavouriteDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class FavouriteServiceIplm implements FavouriteService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<FavouriteDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<FavouriteDTO>>builder()
+        return PageDTO.<List<FavouriteDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

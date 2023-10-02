@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDetailDTO{
+public class CategoryDetailDTO {
     private Long id;
     private String name;
     @JsonIgnoreProperties("categoryDetails")

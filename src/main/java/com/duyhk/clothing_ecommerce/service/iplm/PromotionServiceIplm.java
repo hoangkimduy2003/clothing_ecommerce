@@ -28,12 +28,14 @@ public class PromotionServiceIplm implements PromotionService {
 
     @Override
     public PromotionDTO convertToDto(Promotion promotion) {
-        return new ModelMapper().map(promotion,PromotionDTO.class);
+        return new ModelMapper().map(promotion, PromotionDTO.class);
     }
+
     @Override
     public List<PromotionDTO> getAll() {
         return promotionRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<PromotionDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -43,7 +45,7 @@ public class PromotionServiceIplm implements PromotionService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<PromotionDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<PromotionDTO>>builder()
+        return PageDTO.<List<PromotionDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

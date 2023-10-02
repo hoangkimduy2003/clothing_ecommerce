@@ -21,17 +21,19 @@ public class BillServiceIplm implements BillService {
 
     @Override
     public Bill convertToEntity(BillDTO billDTO) {
-        return new ModelMapper().map(billDTO,Bill.class);
+        return new ModelMapper().map(billDTO, Bill.class);
     }
 
     @Override
     public BillDTO convertToDto(Bill bill) {
-        return new ModelMapper().map(bill,BillDTO.class);
+        return new ModelMapper().map(bill, BillDTO.class);
     }
+
     @Override
     public List<BillDTO> getAll() {
         return billReponsitory.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<BillDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class BillServiceIplm implements BillService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<BillDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<BillDTO>>builder()
+        return PageDTO.<List<BillDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

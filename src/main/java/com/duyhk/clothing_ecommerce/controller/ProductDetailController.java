@@ -13,13 +13,15 @@ import java.util.List;
 public class ProductDetailController {
     @Autowired
     private ProductDetailService productDetailService;
+
     @GetMapping("")
-    public ResponseDTO<List<ProductDetailDTO>> getAll(){
+    public ResponseDTO<List<ProductDetailDTO>> getAll() {
         return ResponseDTO.<List<ProductDetailDTO>>builder()
                 .data(productDetailService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<ProductDetailDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<ProductDetailDTO>>>builder()

@@ -21,17 +21,19 @@ public class PromotionDetailServiceIplm implements PromotionDetailService {
 
     @Override
     public PromotionDetail convertToEntity(PromotionDetailDTO promotionDetailDTO) {
-        return new ModelMapper().map(promotionDetailDTO,PromotionDetail.class);
+        return new ModelMapper().map(promotionDetailDTO, PromotionDetail.class);
     }
 
     @Override
     public PromotionDetailDTO convertToDto(PromotionDetail promotionDetail) {
-        return new ModelMapper().map(promotionDetail,PromotionDetailDTO.class);
+        return new ModelMapper().map(promotionDetail, PromotionDetailDTO.class);
     }
+
     @Override
     public List<PromotionDetailDTO> getAll() {
         return promotionDetailRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<PromotionDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -41,7 +43,7 @@ public class PromotionDetailServiceIplm implements PromotionDetailService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<PromotionDetailDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<PromotionDetailDTO>>builder()
+        return PageDTO.<List<PromotionDetailDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

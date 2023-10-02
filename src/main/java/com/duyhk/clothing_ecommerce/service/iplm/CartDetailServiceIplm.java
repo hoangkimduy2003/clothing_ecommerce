@@ -18,19 +18,22 @@ import java.util.stream.Collectors;
 public class CartDetailServiceIplm implements CartDetailService {
     @Autowired
     private CartDetailReponsitory cartDetailRepo;
+
     @Override
     public CartDetail convertToEntity(CartDetailDTO cartDetailDTO) {
-        return new ModelMapper().map(cartDetailDTO,CartDetail.class);
+        return new ModelMapper().map(cartDetailDTO, CartDetail.class);
     }
 
     @Override
     public CartDetailDTO convertToDto(CartDetail cartDetail) {
-        return new ModelMapper().map(cartDetail,CartDetailDTO.class);
+        return new ModelMapper().map(cartDetail, CartDetailDTO.class);
     }
+
     @Override
     public List<CartDetailDTO> getAll() {
         return cartDetailRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<CartDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -40,7 +43,7 @@ public class CartDetailServiceIplm implements CartDetailService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<CartDetailDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<CartDetailDTO>>builder()
+        return PageDTO.<List<CartDetailDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

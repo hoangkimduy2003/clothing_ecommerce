@@ -12,7 +12,9 @@ public interface CartDetailService {
     CartDetail convertToEntity(CartDetailDTO cartDetailDTO);
 
     CartDetailDTO convertToDto(CartDetail cartDetail);
+
     List<CartDetailDTO> getAll();
+
     PageDTO<List<CartDetailDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     CartDetailDTO getById(Long id);

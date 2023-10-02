@@ -1,5 +1,6 @@
 package com.duyhk.clothing_ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDetail{
+public class CategoryDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,9 +23,9 @@ public class CategoryDetail{
 
     @ManyToOne
     @JsonIgnoreProperties("categoryDetails")
-    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToMany(mappedBy = "categoryDetail")
+    @JsonIgnore
     private List<Product> products;
 }

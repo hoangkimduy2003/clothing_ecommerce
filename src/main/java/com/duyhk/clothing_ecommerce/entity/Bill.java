@@ -17,6 +17,7 @@ public class Bill extends TimeAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String billCode;
     private String note;
     private Long tatolProduct;
     private Double totalMoney;

@@ -13,13 +13,15 @@ import java.util.List;
 public class PromotionController {
     @Autowired
     private PromotionService promotionService;
+
     @GetMapping("")
-    public ResponseDTO<List<PromotionDTO>> getAll(){
+    public ResponseDTO<List<PromotionDTO>> getAll() {
         return ResponseDTO.<List<PromotionDTO>>builder()
                 .data(promotionService.getAll())
                 .status(200)
                 .build();
     }
+
     @PostMapping("/page")
     public ResponseDTO<PageDTO<List<PromotionDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
         return ResponseDTO.<PageDTO<List<PromotionDTO>>>builder()

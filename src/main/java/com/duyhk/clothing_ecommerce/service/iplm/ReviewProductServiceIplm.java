@@ -23,17 +23,19 @@ public class ReviewProductServiceIplm implements ReviewProductService {
 
     @Override
     public ReviewProduct convertToEntity(ReviewProductDTO reviewProductDTO) {
-        return new ModelMapper().map(reviewProductDTO,ReviewProduct.class);
+        return new ModelMapper().map(reviewProductDTO, ReviewProduct.class);
     }
 
     @Override
     public ReviewProductDTO convertToDto(ReviewProduct reviewProduct) {
-        return new ModelMapper().map(reviewProduct,ReviewProductDTO.class);
+        return new ModelMapper().map(reviewProduct, ReviewProductDTO.class);
     }
+
     @Override
     public List<ReviewProductDTO> getAll() {
         return reviewProductRepo.findAll().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
     }
+
     @Override
     public PageDTO<List<ReviewProductDTO>> getByPageRequest(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setPage(pageRequestDTO.getPage() == null ? 0 : pageRequestDTO.getPage());
@@ -43,7 +45,7 @@ public class ReviewProductServiceIplm implements ReviewProductService {
                         pageRequestDTO.getPage(),
                         pageRequestDTO.getSize()));
         List<ReviewProductDTO> listDto = pageEntity.get().map(a -> convertToDto(a)).collect(Collectors.toList());
-        return  PageDTO.<List<ReviewProductDTO>>builder()
+        return PageDTO.<List<ReviewProductDTO>>builder()
                 .data(listDto)
                 .totalElements(pageEntity.getTotalElements())
                 .totalPages(pageEntity.getTotalPages())

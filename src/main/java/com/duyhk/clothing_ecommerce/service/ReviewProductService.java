@@ -12,7 +12,9 @@ public interface ReviewProductService {
     ReviewProduct convertToEntity(ReviewProductDTO reviewProductDTO);
 
     ReviewProductDTO convertToDto(ReviewProduct reviewProduct);
+
     List<ReviewProductDTO> getAll();
+
     PageDTO<List<ReviewProductDTO>> getByPageRequest(PageRequestDTO pageRequestDTO);
 
     ReviewProductDTO getById(Long id);
