@@ -15,18 +15,20 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users implements UserDetails {
+public class Users extends TimeAuditable implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String password;
     private String email;
     private String image;
+    private String phoneNumber;
+    private String fullName;
     private Role role;
     private Integer status;
 
-    @OneToMany
-    private List<Voucher> vouchers;
+    @OneToMany(mappedBy = "user")
+    private List<VoucherDetail> voucherDetails;
 
     @OneToMany(mappedBy = "user")
     private List<Address> addresses;

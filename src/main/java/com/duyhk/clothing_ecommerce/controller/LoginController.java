@@ -29,7 +29,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseDTO<String> login(@RequestBody @Valid LoginDTO loginDTO) {
-        Authentication authentication =authenticationManager.authenticate(
+        authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),loginDTO.getPassword())
         );
         Users user = userService.findByEmail(loginDTO.getEmail());
@@ -45,6 +45,17 @@ public class LoginController {
         return ResponseDTO.<Void>builder()
                 .status(200)
                 .msg("Đăng kí thành công")
+                .build();
+    }
+
+    @PutMapping("/changePassword/{id}")
+    public ResponseDTO<Void> changePassword(@RequestBody @Valid UserDTO userDTO,
+                                            @PathVariable Long id){
+        userDTO.setId(id);
+        userService.update(userDTO);
+        return ResponseDTO.<Void>builder()
+                .msg("Thay đổi mật khẩu thành công")
+                .status(200)
                 .build();
     }
 }

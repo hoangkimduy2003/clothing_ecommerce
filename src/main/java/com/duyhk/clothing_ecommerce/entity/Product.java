@@ -37,8 +37,7 @@ public class Product extends TimeAuditable {
     @JsonIgnoreProperties("products")
     private Brand brand;
 
-    @OneToMany(mappedBy = "product")
-    private List<PromotionDetail> promotionDetails;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductDetail> productDetails;

@@ -21,5 +21,5 @@ public class PromotionDetail {
 
     @ManyToOne
     @JsonIgnoreProperties("promotionDetails")
-    private Product product;
+    private ProductDetail productDetail;
 }

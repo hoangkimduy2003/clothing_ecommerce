@@ -10,27 +10,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
+    private final String SECRET_KEY = "09765414820399157140180920032004200310112019";
     public String generateToken(Users users) {
         Claims claims = Jwts.claims().setSubject(users.getEmail());
         claims.put("user",users);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() * 1000 * 60 * 24))
-                .signWith(getSiginKey(), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 15))
+                .signWith(getKey(),SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String getUsername(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(getSiginKey())
-                    .build().parseClaimsJws(token)
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
         } catch (Exception e) {
@@ -39,35 +42,20 @@ public class JwtService {
         return null;
     }
 
-    public String extractUserName(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolvers.apply(claims);
-    }
-
-    public Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSiginKey())
-                .build()
-                .parseClaimsJwt(token)
-                .getBody();
-    }
-
-    private Key getSiginKey() {
-        byte[] key = Decoders.BASE64.decode("09765414820399157140180920032004200310112019");
+    private Key getKey(){
+        byte[] key = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(key);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
+        Date timeEnd = Jwts.parserBuilder()
+                .setSigningKey(getKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
         String username = getUsername(token);
-        return (username.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token));
+        return (username.equalsIgnoreCase(userDetails.getUsername()) && !timeEnd.before(new Date()));
     }
 
-    public boolean isTokenExpired(String token){
-        return extractClaim(token, Claims :: getExpiration).before(new Date());
-    }
 }

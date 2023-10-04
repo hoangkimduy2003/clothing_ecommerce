@@ -44,4 +44,6 @@ public class ProductDetail {
     @OneToMany(mappedBy = "productDetail")
     private List<ReviewProduct> reviewProducts;
 
+    @OneToMany(mappedBy = "productDetail")
+    private List<PromotionDetail> promotionDetails;
 }

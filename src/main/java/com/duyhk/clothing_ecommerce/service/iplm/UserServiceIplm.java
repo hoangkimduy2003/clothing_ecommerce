@@ -3,7 +3,11 @@ package com.duyhk.clothing_ecommerce.service.iplm;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
 import com.duyhk.clothing_ecommerce.dto.UserDTO;
+import com.duyhk.clothing_ecommerce.entity.Cart;
+import com.duyhk.clothing_ecommerce.entity.Favourite;
 import com.duyhk.clothing_ecommerce.entity.Users;
+import com.duyhk.clothing_ecommerce.reponsitory.CartReponsitory;
+import com.duyhk.clothing_ecommerce.reponsitory.FavouriteReponsitory;
 import com.duyhk.clothing_ecommerce.reponsitory.UserReponsitory;
 import com.duyhk.clothing_ecommerce.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +29,12 @@ import java.util.stream.Collectors;
 public class UserServiceIplm implements UserService, UserDetailsService {
     @Autowired
     private UserReponsitory userRepo;
+
+    @Autowired
+    private CartReponsitory cartRepo;
+
+    @Autowired
+    private FavouriteReponsitory favouriteRepo;
 
     @Override
     public Users convertToEntity(UserDTO userDTO) {
@@ -71,6 +81,8 @@ public class UserServiceIplm implements UserService, UserDetailsService {
     public void create(UserDTO userDTO) {
         Users users = convertToEntity(userDTO);
         users.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        users.setFavourite(new Favourite());
+        users.setCart(new Cart(0L, 0.0));
         userRepo.save(users);
     }
 
@@ -78,7 +90,7 @@ public class UserServiceIplm implements UserService, UserDetailsService {
     public void update(UserDTO userDTO) {
         Users user = userRepo.findById(userDTO.getId()).orElseThrow(IllegalArgumentException::new);
         if (user != null) {
-            user = convertToEntity(userDTO);
+            user = convertEndecorUser(user, userDTO);
             userRepo.save(user);
         }
 
@@ -95,5 +107,13 @@ public class UserServiceIplm implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public Users convertEndecorUser(Users user, UserDTO userDTO) {
+        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
+        user.setImage(user.getImage());
+        user.setFullName(userDTO.getFullName());
+        user.setPhoneNumber(user.getPhoneNumber());
+        return user;
     }
 }

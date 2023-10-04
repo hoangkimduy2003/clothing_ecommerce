@@ -33,4 +33,6 @@ public class Bill extends TimeAuditable {
     @OneToMany(mappedBy = "bill")
     private List<BillDetail> billDetails;
 
+    @ManyToOne
+    private Voucher voucher;
 }

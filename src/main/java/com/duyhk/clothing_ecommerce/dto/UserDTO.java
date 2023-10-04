@@ -12,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class UserDTO extends TimeAuditableDTO {
     private Long id;
+    private String phoneNumber;
+    private String fullName;
     private String password;
     private String email;
     private String image;
