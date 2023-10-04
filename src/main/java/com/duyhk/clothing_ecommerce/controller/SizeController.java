@@ -22,10 +22,11 @@ public class SizeController {
                 .build();
     }
 
-    @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<SizeDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    @GetMapping("/page")
+    public ResponseDTO<PageDTO<List<SizeDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<SizeDTO>>>builder()
-                .data(sizeService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(sizeService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

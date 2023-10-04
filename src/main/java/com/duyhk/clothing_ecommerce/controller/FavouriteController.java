@@ -23,9 +23,10 @@ public class FavouriteController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<FavouriteDTO>>> getByPageRequest(@RequestBody PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<FavouriteDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                     @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<FavouriteDTO>>>builder()
-                .data(favouriteService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(favouriteService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

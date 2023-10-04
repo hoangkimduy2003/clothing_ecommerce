@@ -23,9 +23,10 @@ public class CategoryController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<CategoryDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<CategoryDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                    @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<CategoryDTO>>>builder()
-                .data(categoryService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(categoryService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

@@ -23,9 +23,10 @@ public class PromotionController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<PromotionDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<PromotionDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                     @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<PromotionDTO>>>builder()
-                .data(promotionService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(promotionService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

@@ -24,9 +24,10 @@ public class CategoryDetailController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<CategoryDetailDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<CategoryDetailDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                          @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<CategoryDetailDTO>>>builder()
-                .data(categoryDetailService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(categoryDetailService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

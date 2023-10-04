@@ -23,9 +23,10 @@ public class BillDetailController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<BillDetailDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<BillDetailDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                      @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<BillDetailDTO>>>builder()
-                .data(billDetailService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(billDetailService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }
