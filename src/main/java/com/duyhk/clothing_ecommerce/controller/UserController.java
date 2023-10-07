@@ -26,9 +26,10 @@ public class UserController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<UserDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<UserDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<UserDTO>>>builder()
-                .data(userService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(userService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

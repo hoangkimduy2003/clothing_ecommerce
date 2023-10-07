@@ -23,9 +23,10 @@ public class ProductDetailController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<ProductDetailDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<ProductDetailDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                         @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<ProductDetailDTO>>>builder()
-                .data(productDetailService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(productDetailService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

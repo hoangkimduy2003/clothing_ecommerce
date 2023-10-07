@@ -23,9 +23,10 @@ public class ReviewProductController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<ReviewProductDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<ReviewProductDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                         @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<ReviewProductDTO>>>builder()
-                .data(reviewProductService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(reviewProductService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

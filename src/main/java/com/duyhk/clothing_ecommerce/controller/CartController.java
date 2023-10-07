@@ -23,9 +23,10 @@ public class CartController {
     }
 
     @PostMapping("/page")
-    public ResponseDTO<PageDTO<List<CartDTO>>> getByPageRequest(@RequestBody(required = false) PageRequestDTO pageRequestDTO) {
+    public ResponseDTO<PageDTO<List<CartDTO>>> getByPageRequest(@RequestParam(name = "page", required = false) Integer page,
+                                                                @RequestParam(name = "size", required = false) Integer size) {
         return ResponseDTO.<PageDTO<List<CartDTO>>>builder()
-                .data(cartService.getByPageRequest(pageRequestDTO == null ? new PageRequestDTO() : pageRequestDTO))
+                .data(cartService.getByPageRequest(new PageRequestDTO(page,size)))
                 .status(200)
                 .build();
     }

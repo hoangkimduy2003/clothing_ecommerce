@@ -3,6 +3,7 @@ package com.duyhk.clothing_ecommerce.service.iplm;
 import com.duyhk.clothing_ecommerce.dto.PageDTO;
 import com.duyhk.clothing_ecommerce.dto.PageRequestDTO;
 import com.duyhk.clothing_ecommerce.dto.UserDTO;
+import com.duyhk.clothing_ecommerce.entity.Address;
 import com.duyhk.clothing_ecommerce.entity.Cart;
 import com.duyhk.clothing_ecommerce.entity.Favourite;
 import com.duyhk.clothing_ecommerce.entity.Users;
@@ -114,6 +115,11 @@ public class UserServiceIplm implements UserService, UserDetailsService {
         user.setImage(user.getImage());
         user.setFullName(userDTO.getFullName());
         user.setPhoneNumber(user.getPhoneNumber());
+        user.setAddresses(
+                userDTO.getAddresses()
+                        .stream().map(u ->
+                                new ModelMapper().map(u, Address.class))
+                        .collect(Collectors.toList()));
         return user;
     }
 }
